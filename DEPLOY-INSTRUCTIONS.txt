@@ -1,0 +1,13 @@
+MicroWallet repaired update package
+
+Includes the logo in the frontend and email templates, an administrator-only custom email page (single recipient or all registered users), and the first-withdrawal three-minute waiting animation. Withdrawal requests are recorded as Pending; the animation is only a waiting screen and does not imply a blockchain payment occurred.
+
+IMPORTANT: This package has NOT been deployed to your Cloudflare account from this chat. Deploy from an authenticated terminal in the project folder:
+  npx.cmd wrangler deploy --name microwallet-repaired-20261025
+
+The Supabase Edge Function must also be deployed from a terminal with the Supabase CLI authenticated, after confirming the project ref:
+  supabase functions deploy microwallet-notifications --project-ref xfppqsngrhyvszakfwig
+
+Required Supabase function secrets for real email delivery: RESEND_API_KEY, EMAIL_FROM (or TRANSFER_EMAIL_FROM), ADMIN_NOTIFY_EMAIL, SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY. Do not put the service role key in frontend files.
+
+The custom-email page requires the current authenticated administrator membership in public.admin_users. Bulk sending uses batches of up to 10 messages and can be limited by the email provider's plan. Test with one recipient first.

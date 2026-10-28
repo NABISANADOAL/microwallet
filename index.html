@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101b2d">
+<title>MicroWallet — Account Portal</title><link rel="stylesheet" href="styles.css"><link rel="icon" type="image/png" href="/microwallet-icon.png">
+</head>
+<body>
+<div class="auth-shell" id="authShell">
+  <section class="auth-brand"><a class="brand" href="#"><img class="brand-logo" src="/microwallet-logo.png" alt="MicroWallet logo"><span>micro<span class="brand-light">wallet</span></span></a><div class="brand-message"><div class="eyebrow">YOUR ACCOUNT, YOUR CONTROL</div><h1>A simpler view of your digital credits.</h1><p>Manage your account and view your credit activity from one secure workspace.</p><div class="brand-points"><span>✓ Private account area</span><span>✓ Transparent activity history</span><span>✓ Admin-reviewed registration</span></div></div><div class="brand-foot">Independent product</div></section>
+  <main class="auth-main"><div class="auth-card">
+    <div class="auth-tabs"><button class="auth-tab active" data-auth-tab="login">Sign in</button><button class="auth-tab" data-auth-tab="signup">Create account</button></div>
+    <div id="authMessage" class="message hidden" role="status"></div>
+    <form id="loginForm"><h2>Welcome back</h2><p class="muted">Sign in to your MicroWallet account.</p><label>Email address<input type="email" id="loginEmail" autocomplete="email" required></label><label>Password<input type="password" id="loginPassword" autocomplete="current-password" minlength="8" required></label><button class="primary full" type="submit">Sign in</button></form>
+    <form id="signupForm" class="hidden"><h2>Create your account</h2><p class="muted">New accounts require administrator approval.</p><label>Email address<input type="email" id="signupEmail" autocomplete="email" required></label><label>Password<input type="password" id="signupPassword" autocomplete="new-password" minlength="8" required><small>Use at least 8 characters.</small></label><label>Confirm password<input type="password" id="signupConfirm" autocomplete="new-password" minlength="8" required></label><button class="primary full" type="submit">Request account</button><p class="tiny muted">By registering, you agree to use this service. Your email is visible only to authorized administrators.</p></form>
+    <div class="auth-note"><span class="lock">▣</span><span>MicroWallet has its own independent account system.</span></div>
+  </div><div class="auth-bottom">Secure Account Portal</div></main>
+</div>
+
+<div class="app hidden" id="appShell">
+  <aside class="sidebar" id="sidebar"><a class="brand" href="#"><img class="brand-logo" src="/microwallet-logo.png" alt="MicroWallet logo"><span>micro<span class="brand-light">wallet</span></span></a><div class="nav-label">WORKSPACE</div><nav><button class="nav-item active" data-page="overview">◫ <span>Overview</span></button><button class="nav-item" data-page="wallets">◉ <span>Wallet addresses</span></button><button class="nav-item" data-page="ledger">↕ <span>Credit history</span></button><button class="nav-item" data-page="topup">+ <span>Request credit</span></button><button class="nav-item" data-page="transfer">⇄ <span>Transfer credit</span></button><button class="nav-item" data-page="withdraw">↗ <span>Withdrawal requests</span></button><button class="nav-item admin-only hidden" data-page="users">♙ <span>Manage users</span></button><button class="nav-item admin-only hidden" data-page="wallet-admin">⌖ <span>Assign addresses</span></button><button class="nav-item admin-only hidden" data-page="topups">▣ <span>Credit requests</span></button><button class="nav-item admin-only hidden" data-page="withdraw-admin">↗ <span>Withdrawals</span></button><button class="nav-item admin-only hidden" data-page="audit">◌ <span>Audit log</span></button><button class="nav-item admin-only hidden" data-page="mail-admin">✉ <span>Email users</span></button></nav><div class="side-bottom"><button class="logout" id="logoutBtn">↪ Sign out</button></div></aside>
+  <main class="main"><header class="topbar"><button class="menu-toggle" id="menuToggle">☰</button><div class="crumb">Workspace <span>/</span> <b id="crumb">Overview</b></div><div class="top-right"><span class="online-dot"></span><span id="roleLabel">Member</span><div class="avatar" id="avatar">M</div></div></header>
+    <section class="page" id="page-overview"><div class="page-heading"><div><div class="eyebrow">ACCOUNT SUMMARY</div><h1>Welcome to MicroWallet</h1><p class="muted" id="welcomeEmail">Loading your account…</p></div><span class="tag" id="accountStatus">Loading</span></div>
+      <div class="stats"><article class="stat"><span>Total account value</span><strong id="balance">$0.00</strong><small>Combined USD value of recorded balances</small></article><article class="stat"><span>Ledger entries</span><strong id="entryCount">0</strong><small>Recorded account changes</small></article><article class="stat"><span>Account status</span><strong id="statusValue">—</strong><small>Administrator-reviewed access</small></article></div>
+      <div class="wallet-actions"><button class="primary" data-page="topup">＋ Deposit / Request credit</button><button class="secondary" data-page="transfer">↗ Send account credit</button><button class="secondary" data-page="wallets">▣ Receive addresses</button><button class="secondary admin-only hidden" data-page="topups">▤ Review requests</button></div>
+      <div class="section-title asset-section-title"><div><h2>Balances</h2><p>Separate balances and USD equivalents for each asset.</p></div><span class="asset-search-label">Default asset · USDT / TRON (TRC20) <span id="marketStatus" class="market-status">Connecting to live market…</span></span></div>
+      <div class="asset-grid"><button class="asset-card asset-card-primary" data-page="wallets"><img class="coin-logo-img" src="https://assets.coingecko.com/coins/images/325/large/Tether.png" alt="Tether logo" loading="lazy"><span class="coin coin-usdt coin-fallback hidden">₮</span><span class="asset-name">Tether</span><b>USDT</b><small>TRON · TRC20</small><strong class="market-price" data-price="USDT">$1.00</strong><span class="asset-arrow">›</span></button><button class="asset-card" data-page="wallets"><img class="coin-logo-img" src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png" alt="Bitcoin logo" loading="lazy"><span class="coin coin-btc coin-fallback hidden">₿</span><span class="asset-name">Bitcoin</span><b>BTC</b><small>Bitcoin network</small><strong class="market-price" data-price="BTC">Loading price…</strong><span class="asset-arrow">›</span></button><button class="asset-card" data-page="wallets"><img class="coin-logo-img" src="https://assets.coingecko.com/coins/images/279/large/ethereum.png" alt="Ethereum logo" loading="lazy"><span class="coin coin-eth coin-fallback hidden">Ξ</span><span class="asset-name">Ethereum</span><b>ETH</b><small>Ethereum network</small><strong class="market-price" data-price="ETH">Loading price…</strong><span class="asset-arrow">›</span></button><button class="asset-card" data-page="wallets"><img class="coin-logo-img" src="https://assets.coingecko.com/coins/images/1094/large/tron-logo.png" alt="TRON logo" loading="lazy"><span class="coin coin-trx coin-fallback hidden">T</span><span class="asset-name">TRON</span><b>TRX</b><small>TRON network</small><strong class="market-price" data-price="TRX">Loading price…</strong><span class="asset-arrow">›</span></button></div>
+      <div class="section-title asset-heading"><div><h2>Wallet balances</h2><p>Default asset: USDT · TRON (TRC20)</p></div><button class="text-link" data-page="wallets">View wallet addresses →</button></div>
+      <div class="table-card asset-table"><div class="table-scroll"><table><thead><tr><th>ASSET</th><th>NETWORK</th><th>MARKET PRICE (USD)</th><th>ACCOUNT BALANCE</th><th>USD VALUE</th><th>ACTION</th></tr></thead><tbody>
+<tr><td><img class="asset-symbol-img" src="https://assets.coingecko.com/coins/images/325/large/Tether.png" alt="Tether logo"> <strong>Tether</strong> <span class="asset-ticker">USDT</span></td><td>TRON · TRC20</td><td><strong data-price="USDT">$1.00</strong></td><td><strong id="assetBalanceUSDT">0.00 USDT</strong></td><td><strong id="assetUsdUSDT">$0.00</strong></td><td><div class="action-group"><button class="small-btn" data-page="transfer">Send</button><button class="small-btn" data-page="wallets">Receive</button></div></td></tr>
+<tr><td><img class="asset-symbol-img" src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png" alt="Bitcoin logo"> <strong>Bitcoin</strong> <span class="asset-ticker">BTC</span></td><td>Bitcoin</td><td><strong data-price="BTC">Loading…</strong></td><td><strong id="assetBalanceBTC">0 BTC</strong></td><td><strong id="assetUsdBTC">$0.00</strong></td><td><div class="action-group"><button class="small-btn" data-page="transfer">Send</button><button class="small-btn" data-page="wallets">Receive</button></div></td></tr>
+<tr><td><img class="asset-symbol-img" src="https://assets.coingecko.com/coins/images/279/large/ethereum.png" alt="Ethereum logo"> <strong>Ethereum</strong> <span class="asset-ticker">ETH</span></td><td>Ethereum</td><td><strong data-price="ETH">Loading…</strong></td><td><strong id="assetBalanceETH">0 ETH</strong></td><td><strong id="assetUsdETH">$0.00</strong></td><td><div class="action-group"><button class="small-btn" data-page="transfer">Send</button><button class="small-btn" data-page="wallets">Receive</button></div></td></tr>
+<tr><td><img class="asset-symbol-img" src="https://assets.coingecko.com/coins/images/1094/large/tron-logo.png" alt="TRON logo"> <strong>TRON</strong> <span class="asset-ticker">TRX</span></td><td>TRON</td><td><strong data-price="TRX">Loading…</strong></td><td><strong id="assetBalanceTRX">0 TRX</strong></td><td><strong id="assetUsdTRX">$0.00</strong></td><td><div class="action-group"><button class="small-btn" data-page="transfer">Send</button><button class="small-btn" data-page="wallets">Receive</button></div></td></tr>
+</tbody></table></div></div>
+    </section>
+    <section class="page hidden" id="page-wallets">
+      <div class="page-heading"><div><div class="eyebrow">YOUR ACCOUNT</div><h1>Wallet addresses</h1><p class="muted">Addresses assigned to your account by the administrator.</p></div></div>
+      <div class="wallet-notice"><span class="wallet-notice-icon">i</span><div><strong>Assigned addresses</strong><p>Only addresses registered for your account are shown here. Verify the asset and network before using an address.</p></div></div>
+      <div class="table-card"><div class="table-scroll"><table><thead><tr><th>ASSET</th><th>NETWORK</th><th>REGISTERED WALLET ADDRESS</th><th>REGISTERED</th><th>ACTIONS</th></tr></thead><tbody id="myWalletRows"><tr><td colspan="5" class="empty">Loading addresses…</td></tr></tbody></table></div></div>
+    </section>
+    <section class="page hidden" id="page-wallet-admin">
+      <div class="page-heading"><div><div class="eyebrow">ADMINISTRATION</div><h1>Assign wallet addresses</h1><p class="muted">Register one address for a user, asset, and network. Once registered, it cannot be edited or deleted.</p></div></div>
+      <div class="table-card" style="padding:22px;max-width:720px"><form id="assignWalletForm">
+        <label class="field-label" for="walletUser">User email</label><input id="walletUser" type="email" required placeholder="user@example.com">
+        <label class="field-label" for="walletAsset">Asset</label><select id="walletAsset" required><option value="USDT">USDT</option><option value="BTC">BTC</option><option value="ETH">ETH</option><option value="BNB">BNB</option><option value="TRX">TRX</option><option value="SOL">SOL</option><option value="LTC">LTC</option><option value="XRP">XRP</option></select>
+        <label class="field-label" for="walletNetwork">Network</label><select id="walletNetwork" required><option value="TRC20">TRC20</option><option value="ERC20">ERC20</option><option value="BEP20">BEP20</option><option value="Bitcoin">Bitcoin</option><option value="Ethereum">Ethereum</option><option value="BNB Smart Chain">BNB Smart Chain</option><option value="TRON">TRON</option><option value="Solana">Solana</option><option value="Litecoin">Litecoin</option><option value="XRP Ledger">XRP Ledger</option></select>
+        <label class="field-label" for="walletAddress">Full wallet address</label><input id="walletAddress" type="text" required minlength="10" maxlength="180" autocomplete="off" placeholder="Paste the exact address">
+        <p class="tiny muted">Please verify the address before saving. The system permanently locks each user + asset + network entry.</p><button class="primary" type="submit">Register address permanently</button>
+      </form></div>
+      <div class="section-title"><div><h2>Registered addresses</h2><p>Existing entries are read-only and cannot be changed or removed.</p></div></div><div class="table-card"><div class="table-scroll"><table><thead><tr><th>USER</th><th>ASSET</th><th>NETWORK</th><th>ADDRESS</th><th>REGISTERED</th></tr></thead><tbody id="adminWalletRows"><tr><td colspan="5" class="empty">Loading…</td></tr></tbody></table></div></div>
+    </section>
+    <section class="page hidden" id="page-ledger"><div class="page-heading"><div><div class="eyebrow">ACCOUNT RECORDS</div><h1>Credit history</h1><p class="muted">A record of account credit changes.</p></div></div><div class="table-card"><div class="table-scroll"><table><thead><tr><th>DATE</th><th>DESCRIPTION</th><th>CHANGE</th><th>RESULTING BALANCE</th></tr></thead><tbody id="ledgerRows"><tr><td colspan="4" class="empty">Loading…</td></tr></tbody></table></div></div></section>
+    <section class="page hidden" id="page-topup"><div class="page-heading"><div><div class="eyebrow">CREDIT</div><h1>Request credit</h1><p class="muted">Submit a credit request for administrator review.</p></div></div><div class="table-card" style="padding:22px;max-width:620px"><form id="topupForm"><label class="field-label" for="topupAsset">Choose asset</label><select id="topupAsset" required><option value="USDT">USDT · Tether</option><option value="BTC">BTC · Bitcoin</option><option value="ETH">ETH · Ethereum</option><option value="TRX">TRX · TRON</option></select><label class="field-label" for="topupAmount" style="margin-top:14px">Requested amount (USD)</label><input id="topupAmount" type="number" min="1" max="1000000000" step="0.01" required placeholder="e.g. 25.00"><p class="tiny muted" id="topupQuote">Estimated credit will appear here.</p><p class="tiny muted">Your account reference: <strong id="walletReference">Loading…</strong></p><button class="primary" type="submit">Submit request</button><p class="tiny muted" style="margin-top:12px">Requests are reviewed by an administrator. Account credits are not on-chain assets.</p></form></div><div class="section-title"><div><h2>My requests</h2><p>Requests remain pending until reviewed by an administrator.</p></div></div><div class="table-card"><div class="table-scroll"><table><thead><tr><th>DATE</th><th>REFERENCE</th><th>AMOUNT</th><th>STATUS</th><th>ADMIN NOTE</th></tr></thead><tbody id="myTopupRows"><tr><td colspan="5" class="empty">Loading…</td></tr></tbody></table></div></div></section>
+    
+    <section class="page hidden" id="page-transfer">
+      <div class="page-heading"><div><div class="eyebrow">CREDIT TRANSFER</div><h1>Transfer credit</h1><p class="muted">Request a transfer to a registered wallet address. A one-time verification code will be sent to your registered email.</p></div></div>
+      <div class="table-card" style="padding:22px;max-width:650px">
+        <form id="transferRequestForm">
+          <label class="field-label" for="transferRecipient">Recipient wallet address</label>
+          <input id="transferRecipient" type="text" maxlength="256" required placeholder="Paste the recipient wallet address">
+          <label class="field-label" for="transferAmount">Amount (USDT units)</label>
+          <input id="transferAmount" type="number" min="0.01" max="100000000" step="0.01" required placeholder="e.g. 10.00">
+          <p class="tiny muted">Your available balance: <strong id="transferBalance">0.00 USDT</strong>.</p>
+          <button class="primary" id="requestTransferCode" type="submit">Send verification code</button>
+        </form>
+        <form id="transferVerifyForm" class="hidden" style="margin-top:18px">
+          <label class="field-label" for="transferCode">6-digit email verification code</label>
+          <input id="transferCode" type="text" inputmode="numeric" pattern="[0-9]{6}" minlength="6" maxlength="6" autocomplete="one-time-code" required placeholder="000000">
+          <p class="tiny muted" id="transferCodeHint">The code expires in 5 minutes. You have up to 5 attempts.</p>
+          <button class="primary" id="confirmTransfer" type="submit">Confirm transfer</button>
+          <button class="secondary" id="cancelTransfer" type="button" style="margin-left:8px">Cancel</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="page hidden" id="page-topups"><div class="page-heading"><div><div class="eyebrow">ADMINISTRATION</div><h1>Credit requests</h1><p class="muted">Review user-submitted requests.</p></div></div><div class="table-card"><div class="table-scroll"><table><thead><tr><th>DATE</th><th>USER ID / REFERENCE</th><th>AMOUNT</th><th>STATUS</th><th>ACTIONS</th></tr></thead><tbody id="topupsRows"><tr><td colspan="5" class="empty">Loading…</td></tr></tbody></table></div></div></section>
+    <section class="page hidden" id="page-withdraw-admin"><div class="page-heading"><div><div class="eyebrow">ADMINISTRATION</div><h1>Withdrawal review</h1><p class="muted">Review requests, record decisions, and mark payouts as paid. Status changes do not execute blockchain transfers.</p></div></div><div class="table-card"><div class="table-scroll"><table><thead><tr><th>REQUESTED</th><th>USER</th><th>AMOUNT</th><th>DESTINATION</th><th>STATUS / NOTE</th><th>ACTIONS</th></tr></thead><tbody id="adminWithdrawRows"><tr><td colspan="6" class="empty">Loading…</td></tr></tbody></table></div></div></section>
+    <section class="page hidden" id="page-users"><div class="page-heading"><div><div class="eyebrow">ADMINISTRATION</div><h1>Manage users</h1><p class="muted">Private user records. Access is restricted to approved administrators.</p></div></div><div class="filters"><input type="search" id="userSearch" placeholder="Search email…" aria-label="Search users"><select id="statusFilter"><option value="all">All statuses</option><option value="pending">Pending</option><option value="approved">Approved</option><option value="suspended">Suspended</option></select></div><div class="table-card"><div class="table-scroll"><table><thead><tr><th>EMAIL</th><th>JOINED</th><th>STATUS</th><th>BALANCE</th><th>ACTIONS</th></tr></thead><tbody id="usersRows"><tr><td colspan="5" class="empty">Loading…</td></tr></tbody></table></div></div></section>
+    <section class="page hidden" id="page-mail-admin"><div class="page-heading"><div><div class="eyebrow">ADMINISTRATION</div><h1>Email users</h1><p class="muted">Send a custom email to one registered user or to all registered users.</p></div></div><div class="table-card" style="padding:22px;max-width:760px"><form id="adminMailForm"><label class="field-label" for="mailAudience">Recipients</label><select id="mailAudience"><option value="single">One user</option><option value="all">All users</option></select><label class="field-label" for="mailRecipient" style="margin-top:14px">User email</label><input id="mailRecipient" type="email" maxlength="254" placeholder="user@example.com"><label class="field-label" for="mailSubject" style="margin-top:14px">Subject</label><input id="mailSubject" maxlength="180" required placeholder="Email subject"><label class="field-label" for="mailBody" style="margin-top:14px">Message</label><textarea id="mailBody" rows="8" maxlength="12000" required placeholder="Write your message..."></textarea><p class="tiny muted">Bulk emails are sent through the configured email provider. Delivery may be rate-limited; the result reports accepted or failed messages.</p><button class="primary" id="mailSendBtn" type="submit">Send email</button><p id="mailResult" class="message hidden" role="status"></p></form></div></section>
+    <section class="page hidden" id="page-audit"><div class="page-heading"><div><div class="eyebrow">ADMINISTRATION</div><h1>Audit log</h1><p class="muted">Administrator actions and credit adjustments.</p></div></div><div class="table-card"><div class="table-scroll"><table><thead><tr><th>DATE</th><th>ADMIN</th><th>USER</th><th>ACTION</th><th>DETAILS</th></tr></thead><tbody id="auditRows"><tr><td colspan="5" class="empty">Loading…</td></tr></tbody></table></div></div></section>
+      <section class="page hidden" id="page-withdraw">
+      <div class="page-heading"><div><div class="eyebrow">WITHDRAWAL REQUEST</div><h1>Request withdrawal</h1><p class="muted">Submit an asset, amount, and destination wallet. The 24-hour waiting period starts when this request is recorded.</p></div></div>
+      <div class="table-card" style="padding:22px;max-width:650px">
+        <form id="withdrawForm">
+          <label class="field-label" for="withdrawAsset">Asset</label>
+          <select id="withdrawAsset" required><option value="USDT">USDT · Tether</option><option value="BTC">BTC · Bitcoin</option><option value="ETH">ETH · Ethereum</option><option value="TRX">TRX · TRON</option></select>
+          <label class="field-label" for="withdrawAmount" style="margin-top:14px">Amount</label>
+          <input id="withdrawAmount" type="number" min="0.00000001" step="any" required placeholder="Enter amount">
+          <label class="field-label" for="withdrawAddress" style="margin-top:14px">Destination wallet address</label>
+          <input id="withdrawAddress" type="text" minlength="10" maxlength="256" required placeholder="Paste the destination wallet address">
+          <p class="tiny muted">Availability time is calculated from the request timestamp. Submitting this form does not send an on-chain transaction.</p>
+          <button class="primary" id="withdrawSubmit" type="submit">Submit withdrawal request</button>
+        </form>
+      </div>
+      <div class="section-title"><div><h2>My withdrawal requests</h2><p>Each request shows its 24-hour availability time.</p></div></div>
+      <div class="table-card"><div class="table-scroll"><table><thead><tr><th>REQUESTED</th><th>ASSET / AMOUNT</th><th>DESTINATION</th><th>STATUS</th><th>AVAILABLE AFTER</th></tr></thead><tbody id="withdrawRows"><tr><td colspan="5" class="empty">Loading…</td></tr></tbody></table></div></div>
+    </section>
+  <footer>MicroWallet · Account Portal</footer>
+  </main>
+</div>
+
+<div class="modal-backdrop hidden" id="modalBackdrop"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><button class="close" id="modalClose" aria-label="Close">×</button><h2 id="modalTitle">Adjust account</h2><p class="muted" id="modalSubtitle"></p><div id="modalContent"></div><div class="modal-actions"><button class="secondary" id="modalCancel">Cancel</button><button class="primary" id="modalSubmit">Confirm adjustment</button></div></section></div>
+<div class="toast hidden" id="toast" role="status"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/dist/umd/supabase.min.js"></script><script src="config.js"></script><script src="app.js"></script>
+<script>
+(() => {
+  // Aggregated market prices from CoinGecko (not Binance). Free API data may be cached.
+  const coinIds = { BTC: "bitcoin", ETH: "ethereum", TRX: "tron" };
+  const fmt = value => {
+    const n = Number(value);
+    if (!Number.isFinite(n)) return "—";
+    return "$" + n.toLocaleString("en-US", {minimumFractionDigits: n < 1 ? 4 : 2, maximumFractionDigits: n < 1 ? 6 : 2});
+  };
+  async function updatePrices() {
+    const status = document.getElementById("marketStatus");
+    try {
+      const ids = Object.values(coinIds).join(",");
+      const url = "https://api.coingecko.com/api/v3/simple/price?ids=" + encodeURIComponent(ids) + "&vs_currencies=usd";
+      const res = await fetch(url, {cache:"no-store", headers:{"accept":"application/json"}});
+      if (!res.ok) throw new Error("CoinGecko API HTTP " + res.status);
+      const data = await res.json();
+      const prices = {USDT:1};
+      for (const [ticker,id] of Object.entries(coinIds)) {
+        const value = Number(data?.[id]?.usd);
+        if (!Number.isFinite(value) || value <= 0) throw new Error("Missing price for " + ticker);
+        prices[ticker] = value;
+      }
+      for (const [coin, price] of Object.entries(prices)) {
+        document.querySelectorAll('[data-price="' + coin + '"]').forEach(el => { el.textContent = fmt(price); el.title = coin === "USDT" ? "USDT reference price" : "Market price from CoinGecko"; });
+      }
+      if (status) status.textContent = "Market data: CoinGecko · updated " + new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"});
+    } catch (error) {
+      if (status) status.textContent = "Live prices temporarily unavailable · retrying";
+      console.warn("Could not refresh CoinGecko market prices", error);
+    }
+  }
+  document.querySelectorAll(".coin-logo-img, .asset-symbol-img").forEach(img => {
+    img.addEventListener("error", () => { img.classList.add("logo-load-failed"); const fallback = img.nextElementSibling; if (fallback && fallback.classList.contains("coin-fallback")) fallback.classList.remove("hidden"); });
+  });
+  updatePrices();
+  setInterval(updatePrices, 60000);
+})();
+</script>
+</body></html>

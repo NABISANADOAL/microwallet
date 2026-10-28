@@ -1,0 +1,19 @@
+MICROWALLET — DEPLOY TO THE EXISTING CLOUDFLARE WORKER
+
+1. Extract this ZIP to a folder, e.g. C:\MicroWallet-Cloudflare-Deploy
+2. Open PowerShell in that folder.
+3. If Wrangler is not logged in, run: npx.cmd wrangler login
+4. Run the deployment script:
+   Set-ExecutionPolicy -Scope Process Bypass
+   .\DEPLOY-POWERSHELL.ps1
+
+The Worker name is intentionally the existing name:
+microwallet-repaired-20261025
+Expected URL:
+https://microwallet-repaired-20261025.nabisanadgoal0311.workers.dev/
+
+This deployment updates the FRONTEND only. Supabase Edge Function is a separate deployment:
+  npx.cmd supabase login
+  npx.cmd supabase functions deploy microwallet-notifications --project-ref xfppqsngrhyvszakfwig
+
+The function requires its existing secrets to be configured in Supabase (RESEND_API_KEY, EMAIL_FROM or TRANSFER_EMAIL_FROM, ADMIN_NOTIFY_EMAIL, SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY). Do not put service-role keys in public/config.js.

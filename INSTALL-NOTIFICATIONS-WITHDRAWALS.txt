@@ -1,0 +1,18 @@
+MicroWallet — email and withdrawal update
+
+BACKEND STATUS
+- Supabase database migration has already been applied to project xfppqsngrhyvszakfwig.
+- Edge Function `microwallet-notifications` has been deployed and accepts TRANSFER_EMAIL_FROM (the secret you saved) or EMAIL_FROM.
+- Do NOT run the SQL migration again unless setting up a separate project.
+
+ONE REMAINING DEPLOYMENT STEP: update the static website on the existing Cloudflare Worker.
+1. Extract this ZIP to a folder on Windows.
+2. Open PowerShell in that folder (the folder containing wrangler.jsonc).
+3. Run: npx wrangler deploy
+   This targets the existing Worker `microwallet-repaired-20261025` and preserves its URL.
+4. Test credit request -> admin approve/reject -> wallet address assignment -> withdrawal request -> admin review.
+
+Secrets already configured in Supabase: RESEND_API_KEY and TRANSFER_EMAIL_FROM.
+The sender address must be verified in Resend. Do not share the API key.
+
+Important: the withdrawal status `paid` is an admin record only; this application does not send blockchain transactions. The request workflow does not automatically debit or pay cryptocurrency.
